@@ -1,6 +1,8 @@
 const paymentService = require('../services/paymentService');
 const telebirrService = require('../services/telebirrService');
 const crypto = require('crypto');
+const { parseTelebirrResponse } = require('../services/telebirrParser');
+const { parseTelebirrResult } = require('../services/telebirrResultParser');
 
 function generateSecure12Digit() {
   const bytes = crypto.randomBytes(6); // 6 bytes = 12 hex chars approx
@@ -16,7 +18,7 @@ exports.getPayments = async (req, res) => {
 exports.createPayment = async (req, res) => {
   const unixMillis = Date.now();
   const xml = telebirrService.buildTelebirrRequest ({
-    conversationId: "TX" + generateSecure12Digit(),
+    conversationId: req.body.conversationId,//"TX" + generateSecure12Digit(),
     thirdPartyId: process.env.THIRD_PARTY_ID,
     password: process.env.PASSWORD,
     resultUrl: process.env.RESULT_URL,
@@ -30,4 +32,38 @@ exports.createPayment = async (req, res) => {
   });
   res.set('Content-Type', 'text/xml');
   res.send(xml);
+};
+
+exports.handleTelebirrResponse = async (req, res) => {
+
+  const xml = req.body; // raw XML
+  const parsed = await parseTelebirrResponse(xml);
+
+  if (parsed.success) {
+    // update DB transaction status
+  }
+
+  res.json(parsed);
+};
+
+exports.handleTelebirrCallback = async (req, res) => {
+  try {
+    const xml = req.body;
+    const parsed = await parseTelebirrResult(xml);
+
+    console.log('Telebirr Callback:', parsed);
+    if (parsed.success) {
+      // update transaction in PostgreSQL
+      // e.g. mark as SUCCESS using conversationId or transactionId
+    } else {
+      // handle failure
+    }
+
+    // Telebirr usually expects HTTP 200 OK
+    res.status(200).send('OK');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('ERROR');
+  }
 };
