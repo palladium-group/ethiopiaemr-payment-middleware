@@ -3,6 +3,7 @@ const telebirrService = require('../services/telebirrService');
 const crypto = require('crypto');
 const { parseTelebirrResponse } = require('../services/telebirrParser');
 const { parseTelebirrResult } = require('../services/telebirrResultParser');
+const { saveCallbackLog } = require('../services/callbackLogService');
 
 function generateSecure12Digit() {
   const bytes = crypto.randomBytes(6); // 6 bytes = 12 hex chars approx
@@ -47,23 +48,38 @@ exports.handleTelebirrResponse = async (req, res) => {
 };
 
 exports.handleTelebirrCallback = async (req, res) => {
+  const xml = req.body;
+
   try {
-    const xml = req.body;
     const parsed = await parseTelebirrResult(xml);
 
-    console.log('Telebirr Callback:', parsed);
-    if (parsed.success) {
-      // update transaction in PostgreSQL
-      // e.g. mark as SUCCESS using conversationId or transactionId
-    } else {
-      // handle failure
-    }
+    await saveCallbackLog({
+      provider: 'telebirr',
+      conversationId: parsed.conversationId,
+      originatorConversationId: parsed.originatorConversationId,
+      transactionId: parsed.transactionId,
+      resultCode: parsed.resultCode,
+      resultDesc: parsed.resultDesc,
+      rawXml: xml,
+      parsedData: parsed   // store parsed JSON
+    });
 
-    // Telebirr usually expects HTTP 200 OK
     res.status(200).send('OK');
 
   } catch (error) {
-    console.error(error);
+    console.error('Callback processing failed:', error);
+
+    await saveCallbackLog({
+      provider: 'telebirr',
+      conversationId: null,
+      originatorConversationId: null,
+      transactionId: null,
+      resultCode: 'ERROR',
+      resultDesc: error.message,
+      rawXml: xml,
+      parsedData: null   // or you can store partial data if available
+    });
+
     res.status(500).send('ERROR');
   }
 };
