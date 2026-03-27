@@ -58,6 +58,7 @@ jobs:
           test -n "$SSH_HOST" || (echo "Missing secret: SSH_HOST" && exit 1)
           test -n "$SSH_USER" || (echo "Missing secret: SSH_USER" && exit 1)
           test -n "$SSH_PASSWORD" || (echo "Missing secret: SSH_PASSWORD" && exit 1)
+          test -n "$SSH_PORT" || (echo "Missing secret: SSH_PORT" && exit 1)
 
       - name: Install sshpass
         run: |
@@ -67,10 +68,13 @@ jobs:
       - name: Restart Kubernetes deployment over SSH
         shell: bash
         run: |
-          SSH_PORT_VALUE="${SSH_PORT:-22}"
+          SSH_PORT_VALUE="$SSH_PORT"
           sshpass -p "$SSH_PASSWORD" ssh \
             -o StrictHostKeyChecking=no \
-            -o PreferredAuthentications=password \
+            -o PreferredAuthentications=keyboard-interactive,password \
+            -o PubkeyAuthentication=no \
+            -o KbdInteractiveAuthentication=yes \
+            -o PasswordAuthentication=yes \
             -p "$SSH_PORT_VALUE" \
             "$SSH_USER@$SSH_HOST" \
             "kubectl rollout restart deployment/payment-middleware -n payment-middleware"
