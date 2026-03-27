@@ -77,4 +77,4 @@ jobs:
             -o PasswordAuthentication=yes \
             -p "$SSH_PORT_VALUE" \
             "$SSH_USER@$SSH_HOST" \
-            "sudo -n k3s kubectl rollout restart deployment/payment-middleware -n payment-middleware"
+            "KUBECONFIG=\$HOME/.kube/config kubectl rollout restart deployment/payment-middleware -n payment-middleware"
