@@ -59,12 +59,18 @@ jobs:
           test -n "$SSH_USER" || (echo "Missing secret: SSH_USER" && exit 1)
           test -n "$SSH_PASSWORD" || (echo "Missing secret: SSH_PASSWORD" && exit 1)
 
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
       - name: Restart Kubernetes deployment over SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ env.SSH_HOST }}
-          username: ${{ env.SSH_USER }}
-          password: ${{ env.SSH_PASSWORD }}
-          port: ${{ env.SSH_PORT != '' && env.SSH_PORT || '22' }}
-          script: |
-            kubectl rollout restart deployment/payment-middleware  -n payment-middleware
+        shell: bash
+        run: |
+          SSH_PORT_VALUE="${SSH_PORT:-22}"
+          sshpass -p "$SSH_PASSWORD" ssh \
+            -o StrictHostKeyChecking=no \
+            -o PreferredAuthentications=password \
+            -p "$SSH_PORT_VALUE" \
+            "$SSH_USER@$SSH_HOST" \
+            "kubectl rollout restart deployment/payment-middleware -n payment-middleware"
