@@ -37,3 +37,39 @@ exports.createPayment = async (req, res) => {
   }
 };
 
+exports.handleTelebirrCallback = async (req, res) => {
+  const xml = req.body;
+
+  try {
+    const parsed = await parseTelebirrResult(xml);
+
+    await saveCallbackLog({
+      provider: 'telebirr',
+      conversationId: parsed.conversationId,
+      originatorConversationId: parsed.originatorConversationId,
+      transactionId: parsed.transactionId,
+      resultCode: parsed.resultCode,
+      resultDesc: parsed.resultDesc,
+      rawXml: xml,
+      parsedData: parsed   // store parsed JSON
+    });
+
+    res.status(200).send('OK');
+
+  } catch (error) {
+    console.error('Callback processing failed:', error);
+
+    await saveCallbackLog({
+      provider: 'telebirr',
+      conversationId: null,
+      originatorConversationId: null,
+      transactionId: null,
+      resultCode: 'ERROR',
+      resultDesc: error.message,
+      rawXml: xml,
+      parsedData: null   // or you can store partial data if available
+    });
+
+    res.status(500).send('ERROR');
+  }
+};
