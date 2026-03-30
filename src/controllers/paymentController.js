@@ -1,5 +1,6 @@
 const paymentService = require('../services/paymentService');
-const telebirrService = require('../services/telebirrService');
+const { sendToTelebirr } = require('../services/telebirrService');
+const { buildTelebirrRequest } = require('../services/telebirrRequestBuilder');
 const { parseTelebirrResponse } = require('../services/telebirrParser');
 
 const axios = require('axios');
@@ -13,7 +14,7 @@ exports.getPayments = async (req, res) => {
 exports.createPayment = async (req, res) => {
   const unixMillis = Date.now();
   try{
-    const xmlRequest = telebirrService.buildTelebirrRequest ({
+    const xmlRequest = buildTelebirrRequest ({
       originatorConversationId: req.body.conversationId,
       msisdn: req.body.mobileNumber,
       amount: req.body.amount,
