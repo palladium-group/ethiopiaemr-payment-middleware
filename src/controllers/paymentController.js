@@ -24,8 +24,8 @@ exports.createPayment = async (req, res) => {
     // Call Telebirr
     const xmlResponse = await sendToTelebirr(xmlRequest);
     //const apiCallResponse = {"response": xmlResponse, "request": xmlRequest};
-     //res.set('Content-Type', 'text/xml');
-     res.send(JSON.stringify(xmlResponse));
+     res.set('Content-Type', 'text/xml');
+     res.send(xmlResponse);
     // Parse response
     //const parsed = await parseTelebirrResponse(xmlResponse);
 

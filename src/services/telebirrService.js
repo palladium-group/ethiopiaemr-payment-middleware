@@ -17,7 +17,7 @@ async function sendToTelebirr(xmlPayload) {
       { 
         headers: { 'Content-Type': 'text/xml' },
         httpsAgent: agent,
-         timeout: 3000 
+        timeout: 3000 
       }
     );
 
