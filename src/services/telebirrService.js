@@ -14,7 +14,11 @@ async function sendToTelebirr(xmlPayload) {
     const response = await axios.post(
       TELEBIRR_URL,
       xmlPayload,
-      { headers, timeout: 3000 }
+      { 
+        headers: { 'Content-Type': 'text/xml' },
+        httpsAgent: agent,
+         timeout: 3000 
+      }
     );
 
     return response; // raw XML response
