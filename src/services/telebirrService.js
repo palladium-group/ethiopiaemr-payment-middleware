@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+
 const TELEBIRR_URL = process.env.TELEBIRR_API_URL;
 
 
@@ -16,7 +17,7 @@ async function sendToTelebirr(xmlPayload) {
       { headers, timeout: 3000 }
     );
 
-    return response.data; // raw XML response
+    return response; // raw XML response
 
   } catch (error) {
     if (error) {
