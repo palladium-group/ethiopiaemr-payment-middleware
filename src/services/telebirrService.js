@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 
-const TELEBIRR_URL = process.env.TELEBIRR_API_URL;
+const TELEBIRR_URL = "https://10.180.70.177:30002/payment/services/APIRequestMgrService";//process.env.TELEBIRR_API_URL;
 
 
 // SOAP headers required by Telebirr
