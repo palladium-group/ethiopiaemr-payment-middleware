@@ -13,17 +13,18 @@ async function sendToTelebirr(xmlPayload) {
     const response = await axios.post(
       TELEBIRR_URL,
       xmlPayload,
-      { headers, timeout: 30000 }
+      { headers, timeout: 3000 }
     );
 
     return response.data; // raw XML response
 
   } catch (error) {
-    if (error.response) {
-      // Telebirr responded with error status
-      return error.response.data;
+    if (error) {
+       // Telebirr responded with error status
+       //return error.response.data;
+       return error;
     }
-
+    
     // Network or timeout error
     throw new Error('Telebirr API call failed: ' + error.message);
   }

@@ -20,17 +20,18 @@ exports.createPayment = async (req, res) => {
       amount: req.body.amount,
       currency: "ETB"
     });
-    
+    //console.log("XML Request: " + xmlRequest);
     // Call Telebirr
     const xmlResponse = await sendToTelebirr(xmlRequest);
-
+     res.set('Content-Type', 'text/xml');
+     res.send(xmlResponse);
     // Parse response
-    const parsed = await parseTelebirrResponse(xmlResponse);
+    //const parsed = await parseTelebirrResponse(xmlResponse);
 
-    res.json({
+    /*res.json({
       originatorConversationId,
       telebirrResponse: parsed
-    });
+    });*/
 
   } catch (error) {
     console.error(error);

@@ -18,9 +18,9 @@ function buildTelebirrRequest({
             <req:OriginatorConversationID>${originatorConversationId}</req:OriginatorConversationID>
             <req:Caller>
               <req:CallerType>2</req:CallerType>
-              <req:ThirdPartyID>${process.env.TELEBIRR_THIRD_PARTY_ID}</req:ThirdPartyID>
-              <req:Password>${process.env.TELEBIRR_PASSWORD}</req:Password>
-              <req:ResultURL>http://10.180.73.190:8003/mockAPIResultMgrBinding</req:ResultURL>
+              <req:ThirdPartyID>${process.env.THIRD_PARTY_ID}</req:ThirdPartyID>
+              <req:Password>${process.env.PASSWORD}</req:Password>
+              <req:ResultURL>https://10.180.70.177:30002/mockAPIResultMgrBinding</req:ResultURL>
             </req:Caller>
             <req:KeyOwner>1</req:KeyOwner>
             <req:Timestamp>${new Date().toISOString()}</req:Timestamp>            
