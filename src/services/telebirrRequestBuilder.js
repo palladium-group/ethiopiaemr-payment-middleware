@@ -20,7 +20,7 @@ function buildTelebirrRequest({
               <req:ResultURL>http://10.180.70.177:30001/payment/services/APIRequestMgrService</req:ResultURL>
             </req:Caller>
             <req:KeyOwner>1</req:KeyOwner>
-            <req:Timestamp>${new Date().toISOString()}</req:Timestamp>            
+            <req:Timestamp>${Date.now()}</req:Timestamp>            
           </req:Header>
           <req:Body>
             <req:Identity>
@@ -36,7 +36,7 @@ function buildTelebirrRequest({
               </req:PrimaryParty>
               <req:ReceiverParty>
                 <req:IdentifierType>4</req:IdentifierType>
-                <req:Identifier>${process.env.INITIATOR_ID}</req:Identifier>
+                <req:Identifier>519843</req:Identifier>
               </req:ReceiverParty>
             </req:Identity>
             <req:TransactionRequest>
