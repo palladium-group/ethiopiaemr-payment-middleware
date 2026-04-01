@@ -20,7 +20,7 @@ exports.createPayment = async (req, res) => {
       amount: req.body.amount,
       currency: "ETB"
     });
-    //console.log("XML Request: " + xmlRequest);
+    console.log("XML Request: " + xmlRequest);
     // Call Telebirr
     const xmlResponse = await sendToTelebirr(xmlRequest);
     //const apiCallResponse = {"response": xmlResponse, "request": xmlRequest};

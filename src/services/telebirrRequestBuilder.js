@@ -5,12 +5,9 @@ function buildTelebirrRequest({
   currency
 }) {
   return `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:api="http://cps.huawei.com/cpsinterface/api_requestmgr"
-                  xmlns:req="http://cps.huawei.com/cpsinterface/request" 
-                  xmlns:com="http://cps.huawei.com/cpsinterface/common">
-    <soapenv:Header/>
-    <soapenv:Body>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://cps.huawei.com/cpsinterface/api_requestmgr" xmlns:req="http://cps.huawei.com/cpsinterface/request" xmlns:com="http://cps.huawei.com/cpsinterface/common">
+   <soapenv:Header/>
+   <soapenv:Body>
       <api:Request>
          <req:Header>
             <req:Version>1.0</req:Version>
@@ -20,7 +17,7 @@ function buildTelebirrRequest({
               <req:CallerType>2</req:CallerType>
               <req:ThirdPartyID>${process.env.THIRD_PARTY_ID}</req:ThirdPartyID>
               <req:Password>${process.env.PASSWORD}</req:Password>
-              <req:ResultURL>https://10.180.70.177:30002/mockAPIResultMgrBinding</req:ResultURL>
+              <req:ResultURL>http://10.180.70.177:30001/payment/services/APIRequestMgrService</req:ResultURL>
             </req:Caller>
             <req:KeyOwner>1</req:KeyOwner>
             <req:Timestamp>${new Date().toISOString()}</req:Timestamp>            
