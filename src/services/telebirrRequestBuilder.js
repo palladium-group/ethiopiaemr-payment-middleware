@@ -13,7 +13,7 @@ function buildTelebirrRequest({
     <soapenv:Body>
       <api:Request>
          <req:Header>
-            <req:Version>1.0</api:Version>
+            <req:Version>1.0</req:Version>
             <req:CommandID>InitTrans_BuyGoodsForCustomer</req:CommandID>
             <req:OriginatorConversationID>${originatorConversationId}</req:OriginatorConversationID>
             <req:Caller>
@@ -33,7 +33,6 @@ function buildTelebirrRequest({
                 <req:SecurityCredential>${process.env.SECURITY_CREDENTIAL}</req:SecurityCredential>
                 <req:ShortCode>${process.env.SHORT_CODE}</req:ShortCode>  
               </req:Initiator>
-
               <req:PrimaryParty>
                 <req:IdentifierType>1</req:IdentifierType>
                 <req:Identifier>${msisdn}</req:Identifier>
