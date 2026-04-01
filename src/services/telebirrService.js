@@ -36,7 +36,7 @@ async function sendToTelebirr(xmlPayload) {
     }
     
     // Network or timeout error
-    throw new Error('Telebirr API call failed: ' + error.message);
+    throw new Error('Telebirr API call failed: ' + error);
   }
 }
 

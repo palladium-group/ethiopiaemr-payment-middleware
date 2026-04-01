@@ -36,7 +36,7 @@ exports.createPayment = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error, response: xmlResponse });
   }
 };
 
