@@ -33,6 +33,7 @@ async function parseTelebirrResult(xml) {
     };
 
   } catch (error) {
+    console.log("Error: " + error);
     throw new Error('Failed to parse Telebirr Result callback: ' + error.message);
   }
 }

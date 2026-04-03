@@ -9,10 +9,9 @@ async function saveCallbackLog(data) {
       transaction_id,
       result_code,
       result_desc,
-      raw_xml,
-      parsed_data
+      raw_xml
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
   `;
 
   const values = [
@@ -22,8 +21,8 @@ async function saveCallbackLog(data) {
     data.transactionId,
     data.resultCode,
     data.resultDesc,
-    data.rawXml,
-    data.parsedData ? JSON.stringify(data.parsedData) : null
+    data.rawXml
+    //data.parsedData ? JSON.stringify(data.parsedData) : null
   ];
 
   await db.query(query, values);
