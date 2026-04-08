@@ -17,7 +17,7 @@ function buildTelebirrRequest({
               <req:CallerType>2</req:CallerType>
               <req:ThirdPartyID>${process.env.THIRD_PARTY_ID}</req:ThirdPartyID>
               <req:Password>${process.env.PASSWORD}</req:Password>
-              <req:ResultURL>http://10.180.70.177:30001/payment/services/APIRequestMgrService</req:ResultURL>
+              <req:ResultURL>https://payment.palladiumethiopia.com/api/callbacks</req:ResultURL>
             </req:Caller>
             <req:KeyOwner>1</req:KeyOwner>
             <req:Timestamp>${Date.now()}</req:Timestamp>            

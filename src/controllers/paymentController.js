@@ -27,17 +27,22 @@ exports.createPayment = async (req, res) => {
      res.set('Content-Type', 'text/xml');
      res.send(xmlResponse);
     // Parse response
-    //const parsed = await parseTelebirrResponse(xmlResponse);
+    const parsed = await parseTelebirrResponse(xmlResponse);
 
-    /*res.json({
+    res.json({
       originatorConversationId,
       telebirrResponse: parsed
-    });*/
+    });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error, response: xmlResponse });
-  }
+      console.error(error);
+      res.status(500).json({ 
+        message: error.message,
+        data: error.response?.data,
+        status: error.response?.status,  
+        response: typeof xmlResponse === 'string' ? xmlResponse : JSON.stringify(xmlResponse)
+      });
+    }
 };
 
 exports.handleTelebirrCallback = async (req, res) => {
