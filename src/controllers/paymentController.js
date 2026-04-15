@@ -24,15 +24,15 @@ exports.createPayment = async (req, res) => {
     // Call Telebirr
     const xmlResponse = await sendToTelebirr(xmlRequest);
     //const apiCallResponse = {"response": xmlResponse, "request": xmlRequest};
-     res.set('Content-Type', 'text/xml');
-     res.send(xmlResponse);
+     //res.set('Content-Type', 'text/xml');
+     //res.send(xmlResponse);
     // Parse response
-    //const parsed = await parseTelebirrResponse(xmlResponse);
+    const parsed = await parseTelebirrResponse(xmlResponse);
 
-    //res.json({
-    //  originatorConversationId,
-    //  telebirrResponse: parsed
-    //});
+    res.json({
+      originatorConversationId,
+      telebirrResponse: parsed
+    });
 
   // } catch (error) {
   //     console.error(error);
