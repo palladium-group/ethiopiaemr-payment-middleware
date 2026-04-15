@@ -28,11 +28,8 @@ exports.createPayment = async (req, res) => {
      //res.send(xmlResponse);
     // Parse response
     const parsed = await parseTelebirrResponse(xmlResponse);
-
-    res.json({
-      originatorConversationId,
-      telebirrResponse: parsed
-    });
+    res.send(parsed);
+    
 
   // } catch (error) {
   //     console.error(error);
