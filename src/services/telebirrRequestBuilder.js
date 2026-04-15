@@ -17,7 +17,7 @@ function buildTelebirrRequest({
               <req:CallerType>2</req:CallerType>
               <req:ThirdPartyID>${process.env.THIRD_PARTY_ID}</req:ThirdPartyID>
               <req:Password>${process.env.PASSWORD}</req:Password>
-              <req:ResultURL>http://api.moh.et:6082</req:ResultURL>
+              <req:ResultURL>http://api.moh.et:6082/api/callbacks</req:ResultURL>
             </req:Caller>
             <req:KeyOwner>1</req:KeyOwner>
             <req:Timestamp>${Date.now()}</req:Timestamp>            
