@@ -26,7 +26,7 @@ async function sendToTelebirr(xmlPayload) {
       }
     );
 
-    return response; // raw XML response
+    return response.data; // raw XML response
 
   } catch (error) {
     if (error) {
