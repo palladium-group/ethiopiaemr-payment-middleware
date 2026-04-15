@@ -36,13 +36,13 @@ exports.createPayment = async (req, res) => {
 
   } catch (error) {
       console.error(error);
-      res.send(error);
-      // res.status(500).json({ 
-      //   message: error.message,
-      //   data: error.response?.data,
-      //   status: error.response?.status,  
-      //   response: xmlResponse //typeof xmlResponse === 'string' ? xmlResponse : JSON.stringify(xmlResponse)
-      // });
+      //res.send(error);
+      res.status(500).json({ 
+        message: error.message,
+        data: error.response?.data,
+        status: error.response?.status
+        //response: xmlResponse //typeof xmlResponse === 'string' ? xmlResponse : JSON.stringify(xmlResponse)
+      });
     }
 };
 
