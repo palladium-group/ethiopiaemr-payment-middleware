@@ -13,7 +13,7 @@ exports.getPayments = async (req, res) => {
 
 exports.createPayment = async (req, res) => {
   const unixMillis = Date.now();
-  try{
+  //try{
     const xmlRequest = buildTelebirrRequest ({
       originatorConversationId: req.body.conversationId,
       msisdn: req.body.mobileNumber,
@@ -34,16 +34,16 @@ exports.createPayment = async (req, res) => {
     //  telebirrResponse: parsed
     //});
 
-  } catch (error) {
-      console.error(error);
-      //res.send(error);
-      res.status(500).json({ 
-        message: error.message,
-        data: error.response?.data,
-        status: error.response?.status
-        //response: xmlResponse //typeof xmlResponse === 'string' ? xmlResponse : JSON.stringify(xmlResponse)
-      });
-    }
+  // } catch (error) {
+  //     console.error(error);
+  //     //res.send(error);
+  //     res.status(500).json({ 
+  //       message: error.message,
+  //       data: error.response?.data,
+  //       status: error.response?.status
+  //       //response: xmlResponse //typeof xmlResponse === 'string' ? xmlResponse : JSON.stringify(xmlResponse)
+  //     });
+  //   }
 };
 
 exports.handleTelebirrCallback = async (req, res) => {

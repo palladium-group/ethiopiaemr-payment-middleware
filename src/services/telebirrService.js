@@ -32,11 +32,11 @@ async function sendToTelebirr(xmlPayload) {
     if (error) {
        // Telebirr responded with error status
        //return error.response.data;
-       return error;
+       return error.message;
     }
     
     // Network or timeout error
-    throw new Error('Telebirr API call failed: ' + error);
+    throw new Error('Telebirr API call failed: ' + error.message);
   }
 }
 
